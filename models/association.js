@@ -1,3 +1,5 @@
+const sequelize = require('sequelize')
+
 const Demande = require("./Demande");
 const Prestataire = require("./Prestataire");
 const Service = require("./Service");
@@ -9,6 +11,15 @@ Service.hasMany(Demande);
 
 Prestataire.hasMany(Service);
 Service.belongsTo(Prestataire);
+
+sequelize
+  .sync({ alter: true })
+  .then(() => {
+    console.log("Tous les modèles ont été synchronisés");
+  })
+  .catch((error) => {
+    console.error("Erreur lors de la synchronisation des modèles :", error);
+  });
 
 module.exports = {
     Demande,
