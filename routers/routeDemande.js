@@ -1,9 +1,11 @@
 const express = require("express");
 
-const router = express.Router();
+const  routeDemande = express.Router();
 const controllersDemande = require("../controllers/controllerDemande");
 const authUser = require('../middleware/authUser');
-//enregistrer une demande 
-router.post('/demande', controllersDemande.saveDemande);
+//enregistrer une demande  
+routeDemande.post('/demande', controllersDemande.saveDemande);
 //voir les demandes 
-router.get('/demandes',authUser, controllersDemande.getAllDemandes);
+ routeDemande.get('/demandes',authUser, controllersDemande.getAllDemandes);
+
+module.exports = routeDemande;
