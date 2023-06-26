@@ -41,7 +41,7 @@ exports.connexionPrestataire = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const prestataire = await Prestataire.findOne({
+    const prestataire = await  Prestataire.findOne({
       where: { email: email },
     });
 
