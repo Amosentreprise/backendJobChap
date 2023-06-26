@@ -16,7 +16,27 @@ const Prestataire = sequelize.define("Prestataire", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  numero: {
+  mail: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  tel: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  password1: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  password2: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  ville: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  quartier: {
     type: DataTypes.STRING,
     allowNull: false,
   },

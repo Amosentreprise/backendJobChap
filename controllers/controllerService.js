@@ -3,14 +3,15 @@ const { Service } = require("../models/association");
 
 // Middleware pour la création d'un service avec une image
 exports.createService = (req, res) => {
-  const { title, description, price } = req.body;
+  const { title,  price, vilserv, description } = req.body;
   const image = req.file.filename;
 
   // Création du service dans la base de données
   Service.create({
     title,
-    description,
     price,
+    vilserv,
+    description,
     image,
   })
     .then((service) => {
@@ -30,7 +31,7 @@ exports.createService = (req, res) => {
 exports.putService = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description, price } = req.body;
+    const { title,  price, vilserv, description } = req.body;
 
     // Vérifier si le service existe
     const service = await Service.findByPk(id);
@@ -43,8 +44,10 @@ exports.putService = async (req, res) => {
     // Mettre à jour le service
     await service.update({
       title,
-      description,
       price,
+      vilserv,
+      description,
+      image,
     });
 
     res.json(service);

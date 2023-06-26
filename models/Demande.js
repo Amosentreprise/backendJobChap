@@ -16,10 +16,31 @@ const Demande = sequelize.define("Demande", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  numero: {
+  location: {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  date: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  time: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  tel: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  travaux: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  message: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  
 });
 
 

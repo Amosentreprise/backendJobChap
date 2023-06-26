@@ -4,10 +4,10 @@ const { Demande } = require('../models/association')
 // Enregistrer une demande
 exports.saveDemande =  async (req, res) => {
   try {
-    const { nom, prenom, numero, serviceId } = req.body;
+    const { nom, prenom, location, date, time, tel, travaux, message, serviceId } = req.body;
 
     // Vérifier si le service existe
-    const service = await Service.findByPk(serviceId);
+    const service = await service.findByPk(serviceId);
     if (!service) {
       return res.status(404).json({ error: 'Le service demandé n\'existe pas.' });
     }
@@ -16,7 +16,12 @@ exports.saveDemande =  async (req, res) => {
     const demande = await Demande.create({
       nom,
       prenom,
-      numero,
+      location,
+      date,
+      time,
+      tel,
+      travaux,
+      message,
       ServiceId: serviceId,
     });
 

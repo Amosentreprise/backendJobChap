@@ -13,7 +13,7 @@ function generateToken(prestataire) {
 }
 
 exports.inscriptionPrestataire = async (req, res) => {
-  const { nom, prenom, numeros, password, email } = req.body;
+  const { nom, prenom, mail, tel, password, ville, quartier } = req.body;
 
   try {
     const salt = await bcrypt.genSalt(10);
@@ -23,8 +23,10 @@ exports.inscriptionPrestataire = async (req, res) => {
       password: hashedPassword,
       nom,
       prenom,
-      numeros,
-      email,
+      mail,
+      tel,
+      ville,
+      quartier,
     });
 
     res.status(201).json({ message: "Inscription réussie" });
@@ -85,7 +87,7 @@ exports.getProfilPrestataire = async (req, res) => {
 
 exports.EditProfilPrestataire = async (req, res) => {
 
-      const { nom, prenom, numero, email } = req.body;
+      const { nom, prenom, mail, commune, adresse } = req.body;
       try {
        
           const prestataire = await Prestataire.findOne({
@@ -95,8 +97,9 @@ exports.EditProfilPrestataire = async (req, res) => {
           await prestataire.update({
             nom,
             prenom,
-            numero,
-            email,
+            mail,
+            commune,
+            adresse,
           });
           return res
             .status(200)
