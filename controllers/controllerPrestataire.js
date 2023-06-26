@@ -38,11 +38,11 @@ exports.inscriptionPrestataire = async (req, res) => {
   }
 };
 exports.connexionPrestataire = async (req, res) => {
-  const { email, password } = req.body;
+  const { mail, password } = req.body;
 
   try {
     const prestataire = await Prestataire.findOne({
-      where: { email: email },
+      where: { mail: mail },
     });
 
     //verification du mot de passe
@@ -66,83 +66,76 @@ exports.connexionPrestataire = async (req, res) => {
 };
 
 exports.getProfilPrestataire = async (req, res) => {
-  const userOnline = req.userOnline
-    try {
+  const userOnline = req.prestataireId;
+  try {
+    const infoUser = Prestataire.findOne({
+      where: { prestataireId: userOnline },
+    });
 
-        const infoUser = Prestataire.findOne({
-            where : {prestataireId : userOnline}
-        })
-
-        if (!infoUser) {
-            return res.status(404).json({message : "Vous n'etes pas autorisé à acceder à cette ressource"})
-        }
-
-        return res.status(200).json({infoUser})
-        
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Erreur serveur" });
+    if (!infoUser) {
+      return res
+        .status(404)
+        .json({
+          message: "Vous n'etes pas autorisé à acceder à cette ressource",
+        });
     }
+
+    return res.status(200).json({ infoUser });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
 };
 
 exports.EditProfilPrestataire = async (req, res) => {
+  const { nom, prenom, mail, tel, password, ville, quartier } = req.body;
+  try {
+    const prestataire = await Prestataire.findOne({
+      where: { prestataireId: req.prestataireId },
+    });
 
-      const { nom, prenom, mail, commune, adresse } = req.body;
-      try {
-       
-          const prestataire = await Prestataire.findOne({
-            where: { prestataireId: req.prestataireId },
-          });
-
-          await prestataire.update({
-            nom,
-            prenom,
-            mail,
-            commune,
-            adresse,
-          });
-          return res
-            .status(200)
-            .json({ message: "Mise à jour effectuée avec succes" });
-      
-      } catch (error) {
-        console.log(error);
-        return res.status(500).json({ message: "Erreur serveur" });
-      }
+    await prestataire.update({
+      nom,
+      prenom,
+      mail,
+      tel,
+      password,
+      ville,
+      quartier,
+    });
+    return res
+      .status(200)
+      .json({ message: "Mise à jour effectuée avec succes" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Erreur serveur" });
+  }
 };
 exports.changePasswordPrestataire = async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
 
-     const { oldPassword, newPassword } = req.body;
+  try {
+    // Trouver l'utilisateur dans la base de données
+    const prestataire = await Prestataire.findOne({
+      where: { prestataireId: req.prestataireId },
+    });
 
-     try {
-     
-         // Trouver l'utilisateur dans la base de données
-         const prestataire = await Prestataire.findOne({
-           where: { prestataireId: req.prestataireId },
-          
-         });
+    // Vérifier que l'ancien mot de passe correspond à celui dans la base de données
+    const match = await bcrypt.compare(oldPassword, prestataire.password);
+    if (!match) {
+      return res.status(400).json({ message: "Ancien mot de passe incorrect" });
+    }
+    // Chiffrer le nouveau mot de passe
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-         // Vérifier que l'ancien mot de passe correspond à celui dans la base de données
-         const match = await bcrypt.compare(
-           oldPassword,
-           prestataire.password
-         );
-         if (!match) {
-           return res
-             .status(400)
-             .json({ message: "Ancien mot de passe incorrect" });
-         }
-         // Chiffrer le nouveau mot de passe
-         const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-         // Mettre à jour le mot de passe dans la base de données
-         await Prestataire.update(
-           { password: hashedPassword },
-           { where: { prestataireId: req.prestataireId } }
-         );
-         res.status(200).json({ message: "Mot de passe modifié avec succès" });
-     } catch (error) {
-       console.error(error);
-       res.status(500).json({ message: "Erreur serveur" });
-     }
+    // Mettre à jour le mot de passe dans la base de données
+    await Prestataire.update(
+      { password: hashedPassword },
+      { where: { prestataireId: req.prestataireId } }
+    );
+    res.status(200).json({ message: "Mot de passe modifié avec succès" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
 };

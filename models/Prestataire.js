@@ -24,11 +24,7 @@ const Prestataire = sequelize.define("Prestataire", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  password1: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  password2: {
+  password: {
     type: DataTypes.STRING,
     allowNull: false,
   },
