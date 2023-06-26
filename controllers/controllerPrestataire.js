@@ -42,7 +42,7 @@ exports.connexionPrestataire = async (req, res) => {
 
   try {
     const prestataire = await Prestataire.findOne({
-      where: { email: email },
+      where: { email: mail },
     });
 
     //verification du mot de passe
