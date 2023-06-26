@@ -3,7 +3,7 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 
 const Contact = sequelize.define("Contact", {
-  ContactId: {
+  contactId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
