@@ -19,6 +19,6 @@ const storage = multer.diskStorage({
 });
 
 // Middleware pour la gestion du téléchargement des images
-const upload = multer({ storage: storage }).single('image');
+const upload = multer({ storage: storage }).single('file');
 
 module.exports = upload;

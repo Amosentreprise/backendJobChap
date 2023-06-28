@@ -1,11 +1,13 @@
 const express = require("express");
 const sequelize = require("./config/database");
 const bodyParser = require("body-parser")
+const path = require("path")
 
 //Importer les routes
 const routeDemande = require("./routers/routeDemande");
 const routeService = require("./routers/routeService");
 const routePrestataire = require("./routers/routePrestataire");
+const routeContact = require("./routers/routeContact");
 //Initialisation SERVEUR DE BASE DE DONNES
 
 (async () => {
@@ -38,9 +40,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
+app.use("/images", express.static(path.join(__dirname,'images')));
 app.use("/api", routeDemande);
 app.use("/api", routePrestataire);
 app.use("/api", routeService);
+app.use("/api", routeContact);
 const port = 5000;
 
 app.listen(port, () => {

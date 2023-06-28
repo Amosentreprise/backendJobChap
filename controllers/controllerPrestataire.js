@@ -42,7 +42,7 @@ exports.connexionPrestataire = async (req, res) => {
 
   try {
     const prestataire = await Prestataire.findOne({
-      where: { email: mail },
+      where: { mail: mail },
     });
 
     //verification du mot de passe
@@ -68,7 +68,7 @@ exports.connexionPrestataire = async (req, res) => {
 exports.getProfilPrestataire = async (req, res) => {
   const userOnline = req.prestataireId;
   try {
-    const infoUser = Prestataire.findOne({
+    const infoUser = await Prestataire.findOne({
       where: { prestataireId: userOnline },
     });
 
@@ -79,8 +79,9 @@ exports.getProfilPrestataire = async (req, res) => {
           message: "Vous n'etes pas autorisé à acceder à cette ressource",
         });
     }
+    
 
-    return res.status(200).json({ infoUser });
+    return res.status(200).json( infoUser );
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Erreur serveur" });
@@ -89,6 +90,7 @@ exports.getProfilPrestataire = async (req, res) => {
 
 exports.EditProfilPrestataire = async (req, res) => {
   const { nom, prenom, mail, tel, password, ville, quartier } = req.body;
+  const imagePath = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
   try {
     const prestataire = await Prestataire.findOne({
       where: { prestataireId: req.prestataireId },
@@ -102,6 +104,7 @@ exports.EditProfilPrestataire = async (req, res) => {
       password,
       ville,
       quartier,
+      image:imagePath
     });
     return res
       .status(200)

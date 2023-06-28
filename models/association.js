@@ -3,6 +3,7 @@ const sequelize = require('../config/database')
 const Demande = require("./Demande");
 const Prestataire = require("./Prestataire");
 const Service = require("./Service");
+const Contact = require("./Contact");
 
 //les associations
 
@@ -24,5 +25,6 @@ sequelize
 module.exports = {
     Demande,
     Service,
-    Prestataire
+    Prestataire,
+    Contact
 }

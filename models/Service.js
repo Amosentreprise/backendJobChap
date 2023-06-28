@@ -13,11 +13,11 @@ const Service = sequelize.define("Service", {
   },
   
   price: {
-    type: DataTypes.FLOAT,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   vilserv: {
-    type: DataTypes.FLOAT,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   description: {

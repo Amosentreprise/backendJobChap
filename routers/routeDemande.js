@@ -4,7 +4,7 @@ const  routeDemande = express.Router();
 const controllersDemande = require("../controllers/controllerDemande");
 const authUser = require('../middleware/authUser');
 //enregistrer une demande  
-routeDemande.post('/demande', controllersDemande.saveDemande);
+routeDemande.post('/demande/:demandeId', controllersDemande.saveDemande);
 //voir les demandes 
  routeDemande.get('/demandes',authUser, controllersDemande.getAllDemandes);
 
