@@ -26,7 +26,7 @@ const Service = sequelize.define("Service", {
   },
   image: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
 });
 

@@ -35,6 +35,7 @@ exports.putService = async (req, res) => {
   
     const { serviceId } = req.params;
     const { title,  price, vilserv, description } = req.body;
+    const imagePath = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
 
     try {
         // Vérifier si le service existe
@@ -51,7 +52,7 @@ exports.putService = async (req, res) => {
       price,
       vilserv,
       description,
-      
+      image:imagePath,
     });
   return  res.status(201).json({message : "modification avec succes"});
       

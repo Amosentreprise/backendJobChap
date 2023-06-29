@@ -1,6 +1,8 @@
 const { Contact } = require('../models/association');
+const nodemailer =  require("nodemailer");
 
 exports.createContact = async (req, res)=>{
+
 
     const { nom,  mail, tel, residence, message } = req.body;
   
@@ -14,6 +16,19 @@ exports.createContact = async (req, res)=>{
       message
       
     })
+    // const tranport = nodemailer.createTransport({
+    //   service:"Gmail",
+    //   auth:{
+    //     user:"jobchapr@gmail.com",
+    //     pass:"Amos2003"
+    //   }
+    // });
+    // await tranport.sendMail({
+    //   from:mail,
+    //   to:"jobchapr@gmail.com",
+    //   subject:"No",
+    //   text:"bonjour"
+    // })
     res.status(201).json(contact);
     } catch (error) {
       console.error(error);
